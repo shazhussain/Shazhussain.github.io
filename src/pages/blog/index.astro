@@ -1,114 +1,153 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_TITLE } from '../../consts';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const pageTitle = `Technical Blog | ${SITE_TITLE}`;
+const description =
+	'Technical articles about cybersecurity, networking, infrastructure, systems administration, and hands-on labs.';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
+		<BaseHead title={pageTitle} description={description} />
 	</head>
+
 	<body>
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
+
+		<main class="blog-page">
+			<section class="blog-introduction">
+				<p class="eyebrow">Field notes</p>
+				<h1>Technical Blog</h1>
+				<p>
+					Notes, walkthroughs, investigations, and lessons learned from my work
+					across cybersecurity, networking, and systems administration.
+				</p>
+			</section>
+
+			<section class="post-list" aria-label="Blog articles">
+				{
+					posts.map((post) => (
+						<article class="post-card">
+							<div class="post-meta">
+								<FormattedDate date={post.data.pubDate} />
+
+								{post.data.updatedDate && (
+									<span>
+										Updated <FormattedDate date={post.data.updatedDate} />
+									</span>
+								)}
+							</div>
+
+							<h2>
+								<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+							</h2>
+
+							<p>{post.data.description}</p>
+
+							<a class="read-link" href={`/blog/${post.id}/`}>
+								Read article →
+							</a>
+						</article>
+					))
+				}
 			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.blog-page {
+		padding-bottom: 5rem;
+	}
+
+	.blog-introduction {
+		max-width: 800px;
+		padding: 7rem 0 4rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.blog-introduction h1 {
+		font-size: clamp(3rem, 7vw, 5.4rem);
+	}
+
+	.blog-introduction > p:last-child {
+		max-width: 680px;
+		margin-top: 1.5rem;
+		font-size: 1.1rem;
+	}
+
+	.post-list {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		padding-top: 3rem;
+	}
+
+	.post-card {
+		padding: 1.75rem;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		background: rgba(13, 26, 43, 0.72);
+		transition:
+			transform 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.post-card:hover {
+		transform: translateY(-4px);
+		border-color: var(--border-bright);
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+	}
+
+	.post-card h2 {
+		margin-top: 1.3rem;
+		font-size: 1.6rem;
+	}
+
+	.post-card h2 a {
+		color: var(--text-primary);
+		text-decoration: none;
+	}
+
+	.post-card h2 a:hover {
+		color: var(--accent);
+	}
+
+	.post-card > p {
+		margin-top: 0.9rem;
+	}
+
+	.read-link {
+		display: inline-block;
+		margin-top: 1.4rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	@media (max-width: 760px) {
+		.post-list {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

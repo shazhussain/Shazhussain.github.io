@@ -1,0 +1,158 @@
+<div class="terminal-background" aria-hidden="true">
+	<div class="terminal-stream stream-one">
+		<span><b>$</b> initializing security portfolio...</span>
+		<span><b>$</b> systemctl status infrastructure</span>
+		<span class="success">● infrastructure.service active</span>
+		<span><b>$</b> ip route show</span>
+		<span>default via 10.20.0.1 dev eth0</span>
+		<span><b>$</b> nmap -sV lab-network.local</span>
+		<span>22/tcp open ssh</span>
+		<span>443/tcp open https</span>
+		<span><b>$</b> analyzing endpoint telemetry...</span>
+		<span class="success">no critical alerts detected</span>
+	</div>
+
+	<div class="terminal-stream stream-two">
+		<span><b>$</b> Get-DeviceComplianceStatus</span>
+		<span>Device state: compliant</span>
+		<span><b>$</b> Get-MgIdentityConditionalAccessPolicy</span>
+		<span>Policy: require-managed-device</span>
+		<span><b>$</b> tshark -i eth0</span>
+		<span>TCP 10.20.10.14 → 10.20.30.8</span>
+		<span><b>$</b> checking firewall rules...</span>
+		<span class="success">segmentation policy verified</span>
+	</div>
+
+	<div class="terminal-stream stream-three">
+		<span><b>$</b> whoami</span>
+		<span>shahzaib_hussain</span>
+		<span><b>$</b> cat current-focus.txt</span>
+		<span>cybersecurity</span>
+		<span>network_security</span>
+		<span>systems_administration</span>
+		<span><b>$</b> echo $STATUS</span>
+		<span class="success">building_and_learning</span>
+	</div>
+</div>
+
+<style>
+	.terminal-background {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+		pointer-events: none;
+		background:
+			linear-gradient(rgba(56, 189, 248, 0.025) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(56, 189, 248, 0.025) 1px, transparent 1px),
+			radial-gradient(circle at 80% 10%, rgba(14, 165, 233, 0.12), transparent 35%),
+			#050b14;
+		background-size:
+			42px 42px,
+			42px 42px,
+			auto,
+			auto;
+	}
+
+	.terminal-background::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(56, 189, 248, 0.025),
+			transparent
+		);
+		background-size: 100% 8px;
+		animation: scan 12s linear infinite;
+	}
+
+	.terminal-stream {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		gap: 0.7rem;
+		width: 360px;
+		color: rgba(125, 211, 252, 0.08);
+		font-family: "Cascadia Code", Consolas, monospace;
+		font-size: 0.76rem;
+		white-space: nowrap;
+		animation: terminal-drift 35s linear infinite;
+	}
+
+	.terminal-stream span {
+		display: block;
+	}
+
+	.terminal-stream b {
+		color: rgba(52, 211, 153, 0.12);
+		font-weight: 400;
+	}
+
+	.terminal-stream .success {
+		color: rgba(52, 211, 153, 0.09);
+	}
+
+	.stream-one {
+		top: 15%;
+		left: 3%;
+	}
+
+	.stream-two {
+		top: 55%;
+		right: 2%;
+		animation-duration: 42s;
+		animation-delay: -15s;
+	}
+
+	.stream-three {
+		top: 25%;
+		left: 68%;
+		animation-duration: 38s;
+		animation-delay: -8s;
+	}
+
+	@keyframes terminal-drift {
+		0% {
+			transform: translateY(80px);
+		}
+
+		50% {
+			transform: translateY(-160px);
+		}
+
+		100% {
+			transform: translateY(80px);
+		}
+	}
+
+	@keyframes scan {
+		from {
+			transform: translateY(-20%);
+		}
+
+		to {
+			transform: translateY(20%);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.terminal-stream,
+		.terminal-background::after {
+			animation: none;
+		}
+	}
+
+	@media (max-width: 700px) {
+		.stream-two,
+		.stream-three {
+			display: none;
+		}
+
+		.stream-one {
+			left: -80px;
+			opacity: 0.65;
+		}
+	}
+</style>

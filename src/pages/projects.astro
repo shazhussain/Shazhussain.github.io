@@ -1,0 +1,180 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import TerminalBackground from '../components/TerminalBackground.astro';
+import { SITE_TITLE } from '../consts';
+
+const title = `Projects | ${SITE_TITLE}`;
+const description =
+	'Cybersecurity, networking, and systems administration projects by Shahzaib Hussain.';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body>
+		<TerminalBackground />
+		<Header />
+
+		<main class="projects-page">
+			<section class="page-introduction">
+				<p class="eyebrow">Project directory</p>
+				<h1>Labs, architecture, and technical investigations.</h1>
+				<p>
+					Projects will include diagrams, configurations, testing evidence,
+					security considerations, outcomes, and lessons learned.
+				</p>
+			</section>
+
+			<section class="project-list">
+				<article>
+					<div class="project-heading">
+						<span>NETWORK SECURITY</span>
+						<span class="status">Planning</span>
+					</div>
+
+					<h2>Secure Retail Branch Network</h2>
+					<p>
+						A fictional branch-network architecture separating corporate,
+						point-of-sale, guest, IoT, and management devices.
+					</p>
+
+					<div class="project-tags">
+						<span>VLANs</span>
+						<span>Firewall</span>
+						<span>VPN</span>
+						<span>Wireless</span>
+					</div>
+				</article>
+
+				<article>
+					<div class="project-heading">
+						<span>SECURITY OPERATIONS</span>
+						<span class="status">Planning</span>
+					</div>
+
+					<h2>Security Monitoring Lab</h2>
+					<p>
+						A defensive monitoring environment for log collection, attack
+						simulation, alert investigation, and incident documentation.
+					</p>
+
+					<div class="project-tags">
+						<span>Wazuh</span>
+						<span>Sysmon</span>
+						<span>Windows</span>
+						<span>MITRE ATT&CK</span>
+					</div>
+				</article>
+
+				<article>
+					<div class="project-heading">
+						<span>IDENTITY & ENDPOINTS</span>
+						<span class="status">Planning</span>
+					</div>
+
+					<h2>Entra ID and Intune Security Lab</h2>
+					<p>
+						A Microsoft cloud lab covering enrollment, compliance, endpoint
+						hardening, identity controls, and Conditional Access.
+					</p>
+
+					<div class="project-tags">
+						<span>Entra ID</span>
+						<span>Intune</span>
+						<span>Defender</span>
+						<span>Conditional Access</span>
+					</div>
+				</article>
+			</section>
+		</main>
+
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.projects-page {
+		padding-bottom: 6rem;
+	}
+
+	.page-introduction {
+		max-width: 940px;
+		padding: 7rem 0 5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.page-introduction h1 {
+		font-size: clamp(3rem, 7vw, 5.4rem);
+	}
+
+	.page-introduction > p:last-child {
+		max-width: 720px;
+		margin-top: 1.5rem;
+		font-size: 1.15rem;
+	}
+
+	.project-list {
+		display: grid;
+		gap: 1rem;
+		padding-top: 4rem;
+	}
+
+	.project-list article {
+		padding: 2rem;
+		border: 1px solid var(--border);
+		border-radius: 14px;
+		background: rgba(9, 19, 33, 0.88);
+		backdrop-filter: blur(12px);
+		transition:
+			transform 180ms ease,
+			border-color 180ms ease;
+	}
+
+	.project-list article:hover {
+		transform: translateY(-4px);
+		border-color: var(--accent);
+	}
+
+	.project-heading {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		color: var(--accent);
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+	}
+
+	.status {
+		color: var(--warning);
+	}
+
+	.project-list h2 {
+		margin-top: 1.25rem;
+	}
+
+	.project-list p {
+		max-width: 760px;
+		margin-top: 0.8rem;
+	}
+
+	.project-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1.5rem;
+	}
+
+	.project-tags span {
+		padding: 0.3rem 0.55rem;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		color: var(--text-secondary);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+	}
+</style>
